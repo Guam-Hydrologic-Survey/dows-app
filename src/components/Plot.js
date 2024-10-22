@@ -2,91 +2,53 @@
 Plot.js
 Exports: getPlot(data, element), Plot(data, element), MultiplePlots(selection, element), LargePlotModal(element)
 Parameters: (general)
-    "data" - JSON data (specifically "feature.properties" from fetch method in LMap.js) containing x- and y-values for plot
-    "element" - HTML element with ID for plot container
+"data" - JSON data (specifically "feature.properties" from fetch method in LMap.js) containing x- and y-values for plot
+"element" - HTML element with ID for plot container
 Notes: Detailed function descriptions (discussion of parameters and return values included) are documented throughout code body.
 */
 
 // utilities
 import { convertDate } from "../utils/convertDate.js";
 
-// globals
-let x_data = "";
-let GH_data = "";
-let WL_data = "";
-let BoFL_data = "";
-let BoBL_data = "";
-let BTZ_data = "";
-let BS_data = "";
-
-let traceGH = {
-    x: x_data,
-    y: GH_data,
-    type: 'scatter',
-    mode: 'lines+markers',
-    name: 'GH (ppm)',
-    line: {
-      color: 'yellow',
-      dash: 'dash' 
-  }
-};
-
-let traceWL = {
-    x: x_data,
-    y: WL_data,
-    fill: 'tonexty',
-    type: 'scatter',
-    mode: 'lines+markers',
-    name: 'WL (ppm)',
-    fillcolor: 'rgba(68, 114, 196, 0.2)',
-    line: { color: 'rgb(68, 114, 196)' }
-};
-
-let traceBoFL = {
-    x: x_data,
-    y: BoFL_data,
-    fill: 'tonexty',
-    type: 'scatter',
-    mode: 'lines+markers',
-    name: 'BoFL (ppm)',
-    fillcolor: 'rgba(204, 255, 204, 0.6)',
-    line: { color: 'rgb(66, 255, 66)' }
-};
-
-let traceBoBL = {
-    x: x_data,
-    y: BoBL_data,
-    fill: 'tonexty',
-    type: 'scatter',
-    mode: 'lines+markers',
-    name: 'BoBL (ppm)',
-    fillcolor: 'rgba(0, 204, 102, 0.6)',
-    line: { color: 'rgb(0, 155, 78)' } 
-};
-
-let traceBTZ = {
-    x: x_data,
-    y: BTZ_data,
-    fill: 'tonexty',
-    type: 'scatter',
-    mode: 'lines+markers',
-    name: 'BTZ (ppm)',
-    fillcolor: 'rgba(255, 204, 204, 0.6)',
-    line: { color: 'rgb(255, 187, 187)' }
-};
-let traceBS = {
-    x: x_data,
-    y: BS_data,
-    fill: 'tonextx',
-    type: 'scatter',
-    mode: 'lines+markers',
-    name: 'BS (ppm)',
-    fillcolor: 'rgba(255, 204, 204, 0.6)',
-    line: { color: 'rgb(255, 204, 204)' }
-};
-
 // array to contain plot traces
 let dataValues = [];
+
+// General function to create trace for any data set
+function createTrace(name, xData, yData, color, fillColor, mode = 'lines+markers', fillOption = 'none', lineOptions = {}) {
+    const trace = {
+        x: xData,
+        y: yData,
+        type: 'scatter',
+        mode: mode,
+        name: `${name} (ppm)`,
+        line: {
+            color: color,
+            ...lineOptions // Merge additional line options, like dash
+        }
+    };
+
+    // Apply fill and fill color only if fillOption is specified
+    if (fillOption !== 'none') {
+        trace.fill = fillOption;
+        trace.fillcolor = fillColor;
+    }
+
+    return trace;
+}
+
+
+
+// Initialize traces with different fill options
+let traces = {
+    GH: createTrace('GH', [], [], 'yellow', 'rgba(255,255,0,0.2)', 'lines+markers', 'none', { dash: 'dash' }),  // No fill
+    WL: createTrace('WL', [], [], 'rgb(68, 114, 196)', 'rgba(68, 114, 196, 0.2)', 'lines+markers', 'tonexty'),    // Fill to next y-axis value
+    BoFL: createTrace('BoFL', [], [], 'rgb(66, 255, 66)', 'rgba(204, 255, 204, 0.6)', 'lines+markers', 'tonexty'), // Fill to next x-axis value
+    BoBL: createTrace('BoBL', [], [], 'rgb(0, 155, 78)', 'rgba(0, 204, 102, 0.6)', 'lines+markers', 'tonexty'),       // No fill
+    BTZ: createTrace('BTZ', [], [], 'rgb(255, 187, 187)', 'rgba(255, 204, 204, 0.6)', 'lines+markers', 'tonexty'),  // Fill to next y-axis value
+    BS: createTrace('BS', [], [], 'rgb(255, 204, 204)', 'rgba(255, 204, 204, 0.6)', 'lines+markers', 'tonextx')       // No fill
+};
+
+
 
 let selectorOptions = {
     buttons: [{
@@ -216,44 +178,22 @@ Parameters: "data" - JSON data (specifically "feature.properties" from fetch met
 Return: none
 */
 function setPlotData(data) {
-    // updates arrays with values
-    GH_data = data.GH_vals;
-    WL_data = data.WL_vals;
-    BoFL_data = data.BoFL_vals;
-    BoBL_data = data.BoBL_vals;
-    BTZ_data = data.BTZ_vals;
-    BS_data = data.BS_vals;
-    x_data = convertDate(data.x_vals);
 
-    // updates trace with newly assigned values
-    traceGH.x = x_data;
-    traceGH.y = GH_data;
-    // traceGH.title = `Plot for Well ${data.name}`;
+    const xData = convertDate(data.x_vals);
+
+    // Update traces with new data
+    traces.GH.x = xData; traces.GH.y = data.GH_vals;
+    traces.WL.x = xData; traces.WL.y = data.WL_vals;
+    traces.BoFL.x = xData; traces.BoFL.y = data.BoFL_vals;
+    traces.BoBL.x = xData; traces.BoBL.y = data.BoBL_vals;
+    traces.BTZ.x = xData; traces.BTZ.y = data.BTZ_vals;
+    traces.BS.x = xData; traces.BS.y = data.BS_vals;
 
 
-    traceWL.x = x_data;
-    traceWL.y = WL_data;
-    // traceGH.title = `Plot for Well ${data.name}`;
 
-    traceBoFL.x = x_data;
-    traceBoFL.y = BoFL_data;
-    // traceGH.title = `Plot for Well ${data.name}`;
+    // Update the dataValues array
+    dataValues = [traces.BS, traces.BTZ, traces.BoBL, traces.BoFL, traces.WL, traces.GH];
 
-    traceBoBL.x = x_data;
-    traceBoBL.y = BoBL_data;
-    // traceGH.title = `Plot for Well ${data.name}`;
-
-    traceBTZ.x = x_data;
-    traceBTZ.y = BTZ_data;
-    // traceGH.title = `Plot for Well ${data.name}`;
-
-    traceBS.x = x_data;
-    traceBS.y = BS_data;
-    // traceGH.title = `Plot for Well ${data.name}`;
-
-    // clear array contents
-    dataValues = [];
-    dataValues.push(traceBS, traceBTZ, traceBoBL, traceBoFL, traceWL,traceGH);
 }
 
 /*
@@ -315,21 +255,11 @@ export function Plot(data, element) {
     resetLayout();
     setPlotData(data);
 
-    // updates arrays with values
-    // y_data = data.y_vals;
-    // x_data = convertDate(data.x_vals);
-
-    // config.toImageButtonOptions.filename += `${data.name}`;
-
     layout.title.text = `Well ${data.name}`;
     layout.xaxis.title = " ";
     layout.xaxis.rangeselector = " ";
     layout.yaxis.title = "Depth (ft)";
 
-    // updates trace with newly assigned values
-    // trace.x = x_data;
-    // trace.y = y_data;
-    // trace.title = `Plot for Well ${data.name}`;
 
     Plotly.newPlot(element, dataValues, layout, {
         scrollZoom: true,
@@ -346,6 +276,10 @@ export function Plot(data, element) {
             ],
         modeBarButtonsToRemove: ["lasso2d", "select2d", "toImage"]
     });
+    Plotly.newPlot(element, dataValues, layout).then(gd => {
+        gd.on('plotly_legendclick', () => false); // Disable legend click event
+    });
+
 };
 
 /*
@@ -415,14 +349,18 @@ Parameters:
 Return: none
 */
 function largePlot(data, element) {
+    const xData = convertDate(data.x_vals);
 
-    GH_data = data.GH_vals;
-    WL_data = data.WL_vals;
-    BoFL_data = data.BoFL_vals;
-    BoBL_data = data.BoBL_vals;
-    BTZ_data = data.BTZ_vals;
-    BS_data = data.BS_vals;
-    x_data = convertDate(data.x_vals);
+    // Update traces with new data
+    traces.GH.x = xData; traces.GH.y = data.GH_vals;
+    traces.WL.x = xData; traces.WL.y = data.WL_vals;
+    traces.BoFL.x = xData; traces.BoFL.y = data.BoFL_vals;
+    traces.BoBL.x = xData; traces.BoBL.y = data.BoBL_vals;
+    traces.BTZ.x = xData; traces.BTZ.y = data.BTZ_vals;
+    traces.BS.x = xData; traces.BS.y = data.BS_vals;
+
+    // Update the dataValues array
+    dataValues = [traces.BS, traces.BTZ, traces.BoBL, traces.BoFL, traces.WL, traces.GH];
 
     // config.toImageButtonOptions.filename += `${data.name}`;
 
@@ -433,35 +371,9 @@ function largePlot(data, element) {
 
     layout.height = 600;
     layout.width = 1100;
+ 
 
-    // updates trace with newly assigned values
-     // updates trace with newly assigned values
-     traceGH.x = x_data;
-     traceGH.y = GH_data;
-     // traceGH.title = `Plot for Well ${data.name}`;
- 
- 
-     traceWL.x = x_data;
-     traceWL.y = WL_data;
-     // traceGH.title = `Plot for Well ${data.name}`;
- 
-     traceBoFL.x = x_data;
-     traceBoFL.y = BoFL_data;
-     // traceGH.title = `Plot for Well ${data.name}`;
- 
-     traceBoBL.x = x_data;
-     traceBoBL.y = BoBL_data;
-     // traceGH.title = `Plot for Well ${data.name}`;
- 
-     traceBTZ.x = x_data;
-     traceBTZ.y = BTZ_data;
-     // traceGH.title = `Plot for Well ${data.name}`;
- 
-     traceBS.x = x_data;
-     traceBS.y = BS_data;
-     // traceGH.title = `Plot for Well ${data.name}`;
-
-    Plotly.newPlot(element, [ traceBS, traceBTZ, traceBoBL, traceBoFL, traceWL,traceGH], layout,
+    Plotly.newPlot(element, dataValues, layout,
         {
             scrollZoom: true,
             responsive: true,
@@ -471,7 +383,7 @@ function largePlot(data, element) {
             responsive: true
         })
 
-    Plotly.newPlot(element, [ traceBS, traceBTZ, traceBoBL, traceBoFL, traceWL,traceGH], layout).then(gd => {
+    Plotly.newPlot(element, dataValues, layout).then(gd => {
         gd.on('plotly_legendclick', () => false); // Disable legend click event
     });
 };
