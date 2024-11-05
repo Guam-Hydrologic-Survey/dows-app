@@ -260,7 +260,7 @@ export function Plot(data, element) {
     layout.xaxis.title = " ";
     layout.xaxis.rangeselector = " ";
     layout.yaxis.title = "Depth (ft)";
-
+    
 
     Plotly.newPlot(element, dataValues, layout, {
         scrollZoom: true,
