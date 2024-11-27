@@ -1,4 +1,4 @@
-<h1 align="center">Project Title</h1>
+<h1 align="center">MAppFx: Deep Observation Wells (DOWs)</h1>
 
 ## Abstract 
 
