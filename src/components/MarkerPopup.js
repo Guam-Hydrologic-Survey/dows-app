@@ -9,20 +9,19 @@ Return: "content" - a string constant containing HTML code for the BS UI element
 Notes: can adjust parameters, if needed (i.e., remove lat lon coordinates, add different attributes to display)
 */
 
-export function MarkerPopup(name, loc, lat, lon) {
+import { modalId } from "./Profile.js";
+
+export function MarkerPopup(data) {
     const content = /*html*/
     `
-    <div class="marker-pop-up card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">${name}, ${loc}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">${lat}, ${lon}</h6>
-            <p class="card-text"></p>
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
-            <div class="d-flex justify-content-center">
-                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#more-info-offcanvas" aria-controls="offcanvasWithBothOptions" onclick="" id="marker-more-info">More Info</button>
-            </div>
-        </div>
+    <div id="marker-content-container">
+        <span id="marker-well-name">Well ${data.name}</span>
+        <br>
+        <span id="marker-coords">(${data.lat}, ${data.lon})</span>
+    </div>
+    <br>
+    <div class="d-flex justify-content-center">
+        <button type="button" data-bs-toggle="modal" data-bs-target="#${modalId}" class="btn btn-primary" id="" title="View this DOW's historic profile">View DOW Profile</button>
     </div>
     `
     return content;
