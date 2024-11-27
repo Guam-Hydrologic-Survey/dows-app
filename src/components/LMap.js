@@ -6,11 +6,12 @@ Return: none
 
 // components 
 import { BaseLayers } from "./Baselayers.js";
-import { SidePanel } from "./SidePanel.js";
 import { MarkerPopup } from "./MarkerPopup.js";
-import { MultiplePlots } from "./Plot.js";
 import { completeSelection, additionalSelection, alreadySelected } from "./Toast.js";
 import { SelectionView, choices, choicesLayers, createCheckBox } from "./SelectionView.js";
+
+import { Plot, MultiplePlots } from "./Plot.js";
+import { modalId, plotContentId } from "./Profile.js";
 
 // utils 
 import { geoJsonUrl } from "../utils/dataSource.js";
@@ -179,29 +180,24 @@ export function LMap(element) {
             });
         }
     });
-
-    // array holding well with status for use on point selection through click 
-    // let choices = [];
     
     // get data 
     fetch(geoJsonUrl)
         .then(response => response.json())
         .then(geojson => {
-            let popup = L.popup()
+            let popup = L.popup();
             const getValues = (feature, layer) => {
-                // popup with basic well info and buttons for stats and plot
-                layer.bindPopup(MarkerPopup(feature.properties.name, feature.properties.basin, feature.properties.lat, feature.properties.lon, feature.properties.desc)); 
+                layer.bindPopup(MarkerPopup(feature.properties));
 
                 // label for well name
                 layer.bindTooltip(feature.properties.name, {permanent: true, direction: 'bottom', offset: [0,10]});
 
                 // check if point selection button has been triggered 
                 layer.on("click", point => { 
-                    map.closePopup(); 
+                    Plot(feature.properties, plotContentId);
                     // prevents popup from opening since side panel automatically opens 
                     if (!pointSelectBtnState) {
                         // map.closePopup(); 
-                        SidePanel(point.target.feature.properties);
                         pointSelectLayers = [];
                         // choicesLayers = [];
                         choicesLayers.length = 0;
