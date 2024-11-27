@@ -17,16 +17,7 @@ export function Legend(element) {
       <div class="offcanvas-body">
         <!-- replace/update this section with legend values -->
         <h3>Legend</h3>
-        <hr>
-        <p>Increasing:</p>
-        <br>
-        <br>
-        <br>
-        <p>Decreasing:</p>
-        <br>
-        <br>
-        <br>
-        <p>Insignificant:</p>
+        <p>Update this section with legend values as a list.</p>
       </div>
 
     </div>
