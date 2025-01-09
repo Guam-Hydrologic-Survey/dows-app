@@ -8,10 +8,10 @@ let dataValues = [];
 // Initialize traces with different fill options
 let traces = {
     GH: createTrace('GH 40:1', [], [], 'rgba(234,234,0,0.97)', 'rgba(234,234,0,0.97)', 'lines', 'none', { dash: 'longdash' }),  // No fill
-    WL: createTrace('FW [0-250] ppm', [], [], 'rgb(68, 114, 196)', 'rgba(68, 114, 196, 0.2)', 'lines','tonexty'),    // Fill to next y-axis value
-    BoFL: createTrace('Brackish [250-8100] ppm', [], [], 'rgb(66, 255, 66)', 'rgba(204, 255, 204, 0.6)', 'lines', 'tonexty'), // Fill to next x-axis value
-    BoBL: createTrace('Saline [81000-15000] ppm', [], [], 'rgb(0, 155, 78)', 'rgba(0, 204, 102, 0.6)', 'lines', 'tonexty'),       // No fill
-    BTZ: createTrace('SW >= 15000 ppm', [], [], 'rgb(255, 187, 187)', 'rgba(255, 204, 204, 0.6)', 'lines', 'tonexty'),  // Fill to next y-axis value
+    WL: createTrace('Freshwater [0-250] mg/L Cl-', [], [], 'rgb(68, 114, 196)', 'rgba(68, 114, 196, 0.2)', 'lines','tonexty'),    // Fill to next y-axis value
+    BoFL: createTrace('Brackish (250-8100] mg/L Cl-', [], [], 'rgb(66, 255, 66)', 'rgba(204, 255, 204, 0.6)', 'lines', 'tonexty'), // Fill to next x-axis value
+    BoBL: createTrace('Saline (81000-15000] mg/L Cl-', [], [], 'rgb(0, 155, 78)', 'rgba(0, 204, 102, 0.6)', 'lines', 'tonexty'),       // No fill
+    BTZ: createTrace('Saltwater >= 15000 mg/L Cl-', [], [], 'rgb(255, 187, 187)', 'rgba(255, 204, 204, 0.6)', 'lines', 'tonexty'),  // Fill to next y-axis value
     BS: createTrace('Max Depth', [], [], 'rgb(255, 204, 204)', 'rgba(255, 204, 204, 0.6)', 'lines', 'tonextx')       // No fill
 };
 

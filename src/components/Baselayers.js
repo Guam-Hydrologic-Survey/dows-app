@@ -7,7 +7,7 @@ Return: "baseLayers" - object containing values for Leaflet map tiles
 export function BaseLayers(map, maxZoom) {
     // add your name and the year the project was made here
     const names = "Information Management Team";
-    const year = 2024;
+    const year = 2025;
 
     // const devs = ` | <a href="https://weri.uog.edu/"><img src="./src/assets/WERI-Logo.ico" style="height: 15px;"/> WERI</a> - <a href="https://guamhydrologicsurvey.uog.edu/">GHS</a>: ${names} ${year}`;
     

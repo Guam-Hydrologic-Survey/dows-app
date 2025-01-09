@@ -4,7 +4,7 @@ Description: Entry point for project. Appends all components to #app in index.ht
 */
 
 // components 
-import { About } from "./components/About.js";
+import { About } from "./components/About_v0.js";
 import { FullscreenModal } from "./components/FullscreenModal.js";
 import { NavBar } from "./components/NavBar.js";
 import { Legend } from "./components/Legend.js";

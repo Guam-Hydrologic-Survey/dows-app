@@ -11,13 +11,16 @@ Notes: can adjust parameters, if needed (i.e., remove lat lon coordinates, add d
 
 import { modalId } from "./Profile.js";
 
+// utils 
+import { roundDec } from "../utils/roundDec.js";
+
 export function MarkerPopup(data) {
     const content = /*html*/
     `
     <div id="marker-content-container">
         <span id="marker-well-name">Well ${data.name}</span>
         <br>
-        <span id="marker-coords">(${data.lat}, ${data.lon})</span>
+        <span id="marker-coords">(${roundDec(data.lat)}, ${roundDec(data.lon)})</span>
     </div>
     <br>
     <div class="d-flex justify-content-center">
