@@ -67,8 +67,8 @@ const pointSelectBtn = L.easyButton({
 
 export function LMap(element) {
 
-    const center = [13.5435056,144.7478083];
-    const defaultZoom = 12;
+    const center = [13.5286582,144.8251116];
+    const defaultZoom = 13;
     const maxZoom = 19; 
 
     // creates Leaflet map 
@@ -178,19 +178,19 @@ export function LMap(element) {
     
     lassoControl.addTo(map); 
 
-    // hides tooltip based on zoom level 
-    map.on('zoomend', function(z) {
-        var zoomLevel = map.getZoom();
-        if (zoomLevel >= 15 ){
-            [].forEach.call(document.querySelectorAll('.leaflet-tooltip'), function (t) {
-                t.style.visibility = 'visible';
-            });
-        } else {
-            [].forEach.call(document.querySelectorAll('.leaflet-tooltip'), function (t) {
-                t.style.visibility = 'hidden';
-            });
-        }
-    });
+    // // hides tooltip based on zoom level 
+    // map.on('zoomend', function(z) {
+    //     var zoomLevel = map.getZoom();
+    //     if (zoomLevel >= 10 ){
+    //         [].forEach.call(document.querySelectorAll('.leaflet-tooltip'), function (t) {
+    //             t.style.visibility = 'visible';
+    //         });
+    //     } else {
+    //         [].forEach.call(document.querySelectorAll('.leaflet-tooltip'), function (t) {
+    //             t.style.visibility = 'hidden';
+    //         });
+    //     }
+    // });
     
     // get data 
     fetch(geoJsonUrl)
