@@ -75,9 +75,9 @@
 }
 
 /* Hides tooltips on page load */
-.leaflet-tooltip {
+/* .leaflet-tooltip {
     visibility: hidden;
-  }
+  } */
 
 .bs-btn-group {
     margin: 20px;
