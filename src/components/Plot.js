@@ -122,7 +122,7 @@ export function Plot(data, element) {
             name: `Download DOW ${data.name} historic profile as PNG file`,
             icon: Plotly.Icons.camera,
             click: () => {
-                Plotly.downloadImage(element, { format: 'png', width: 1000, height: 800, filename: `dow_${data.name}_historic_profile` });
+                Plotly.downloadImage(element, { format: 'png', width: 1000, height: 800, filename: `weri_mappfx_dow_${data.name}_historic_profile` });
             }},
             ],
         modeBarButtonsToRemove: ["lasso2d", "select2d", "toImage"]

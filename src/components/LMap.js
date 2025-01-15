@@ -201,7 +201,12 @@ export function LMap(element) {
                 layer.bindPopup(MarkerPopup(feature.properties));
 
                 // label for well name
-                layer.bindTooltip(feature.properties.name, {permanent: true, direction: 'bottom', offset: [0,10]});
+                layer.bindTooltip(feature.properties.name, { 
+                    className: 'well-tooltip',
+                    permanent: true, 
+                    direction: 'top', 
+                    offset: [0, -10],
+                });
 
                 // check if point selection button has been triggered 
                 layer.on("click", point => { 
@@ -232,7 +237,22 @@ export function LMap(element) {
                     }
                 })
             }
-            geoJsonData = L.geoJSON(geojson, { onEachFeature: (getValues) }).addTo(map);
+
+            geoJsonData = L.geoJSON(geojson, 
+                { 
+                    onEachFeature: (getValues), 
+                    pointToLayer: function(feature, latlng) {
+                        return L.circleMarker(latlng, {
+                            radius: 10,
+                            fillColor: '#023047',
+                            weight: 2,
+                            fillOpacity: 1.0,
+                            color: `#000`,
+                            opacity: 1.0
+                        });
+                    }
+                }).addTo(map);
+
             layerControl.addOverlay(geoJsonData, "Layer Name");
 
             // for search control 
@@ -284,6 +304,27 @@ export function LMap(element) {
             // initialize search 
             map.addControl(searchControl);
         });
+
+    fetch("./src/data/NGLABasins.json")
+        .then(response => response.json())
+        .then(json => {
+            const getPoly = (feature, layer) => {
+                layer.bindTooltip(`${feature.properties.Name} Basin`, {
+                    permanent: true, direction: 'center', offset: [0, 40],
+                    className: 'basin-tooltip'
+                });
+            }
+
+            let basins = L.geoJSON(json, {
+                interactive: false, 
+                onEachFeature: getPoly,
+            });
+
+            basins.addTo(map);
+            layerControl.addOverlay(basins, "Basins");
+            // let basins = L.geoJSON(json);
+            // basins.addTo(map);
+        })
 
     // leaflet lasso configuration 
     map.on("lasso.finished", event => {

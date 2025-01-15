@@ -79,6 +79,26 @@
     visibility: hidden;
   } */
 
+.leaflet-tooltip.well-tooltip {
+    font-family: 'Roboto';
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1px;
+    border-radius: 10px;
+}
+
+.leaflet-tooltip.basin-tooltip {
+    font-family: 'Roboto Slab';
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 1px;
+    background: #3388ff;
+    color: #fff;
+    opacity: 40%;
+    border-radius: 30px;
+    border: transparent;
+}
+
 .bs-btn-group {
     margin: 20px;
 }
