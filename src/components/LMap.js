@@ -191,6 +191,25 @@ export function LMap(element) {
     //         });
     //     }
     // });
+
+    fetch("./src/data/NGLABasins.json")
+    .then(response => response.json())
+    .then(json => {
+        const getPoly = (feature, layer) => {
+            layer.bindTooltip(`${feature.properties.Name} Basin`, {
+                permanent: true, direction: 'center', offset: [0, 40],
+                className: 'basin-tooltip'
+            });
+        }
+
+        let basins = L.geoJSON(json, {
+            interactive: false, 
+            onEachFeature: getPoly,
+        });
+
+        basins.addTo(map);
+        layerControl.addOverlay(basins, "Basins");
+    });
     
     // get data 
     fetch(geoJsonUrl)
@@ -253,7 +272,7 @@ export function LMap(element) {
                     }
                 }).addTo(map);
 
-            layerControl.addOverlay(geoJsonData, "Layer Name");
+            layerControl.addOverlay(geoJsonData, "Deep Observation Wells (DOWs)");
 
             // for search control 
             let searchCoords = [];
@@ -304,27 +323,6 @@ export function LMap(element) {
             // initialize search 
             map.addControl(searchControl);
         });
-
-    fetch("./src/data/NGLABasins.json")
-        .then(response => response.json())
-        .then(json => {
-            const getPoly = (feature, layer) => {
-                layer.bindTooltip(`${feature.properties.Name} Basin`, {
-                    permanent: true, direction: 'center', offset: [0, 40],
-                    className: 'basin-tooltip'
-                });
-            }
-
-            let basins = L.geoJSON(json, {
-                interactive: false, 
-                onEachFeature: getPoly,
-            });
-
-            basins.addTo(map);
-            layerControl.addOverlay(basins, "Basins");
-            // let basins = L.geoJSON(json);
-            // basins.addTo(map);
-        })
 
     // leaflet lasso configuration 
     map.on("lasso.finished", event => {
