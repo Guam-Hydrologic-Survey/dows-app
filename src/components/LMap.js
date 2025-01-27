@@ -10,7 +10,7 @@ import { MarkerPopup } from "./MarkerPopup.js";
 import { completeSelection, additionalSelection, alreadySelected } from "./Toast.js";
 import { SelectionView, choices, choicesLayers, createCheckBox } from "./SelectionView.js";
 
-import { Plot, MultiplePlots } from "./Plot.js";
+import { Plot, MultiplePlots } from "./Plot_v2.js";
 import { modalId, plotContentId } from "./Profile.js";
 
 // utils 
