@@ -41,8 +41,16 @@ export function About(element) {
             </p>
           </div>
           <div class="modal-footer about-btns">
-            <a class="btn btn-primary" href="#" target="_blank" rel="noreferrer noopener" role="button">WERI Technical Report</a>
-            <a class="btn btn-primary" href="https://guamhydrologicsurvey.uog.edu/index.php/interagency-maps/" target="_blank" rel="noreferrer noopener" role="button">NGLA Map Series</a>
+            <a class="btn btn-primary" title="Coming soon!" href="#" target="_blank" rel="noreferrer noopener" role="button">WERI Technical Report</a>
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  WERI Map Series
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="https://guamhydrologicsurvey.uog.edu/index.php/mappfx/" title="MAppFx Library on GHS" target="_blank" rel="noreferrer noopener">MAppFx Library</a></li>
+                  <li><a class="dropdown-item" href="https://guamhydrologicsurvey.uog.edu/index.php/web-mapps/" title="Web MApps on GHS" target="_blank" rel="noreferrer noopener">Web MApps</a></li>
+                </ul>
+              </div>
           </div>
         </div>
       </div>
