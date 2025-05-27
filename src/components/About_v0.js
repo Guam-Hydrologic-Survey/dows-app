@@ -17,7 +17,9 @@ export function About(element) {
           <div class="modal-body">
             <span class="weri-tr-title" id="weri-tr-text">MAppFx: Deep Observation Wells (DOWs)</span>
             <br><br>
-            <p id="abstract">MAppFx is a web page interactive map environment that retrieves a graph of a site upon clicking on a map feature object (be it a point, polygon, or a line). MAppFx is a product of WERI through the Guam Hydrologic Survey program (PL 24-247 and 24-161) and USGS 104-b. It is available through the Guam Hydrologic Survey website.</p>
+            <p id="abstract">MAppFx is a web page interactive map environment that retrieves a graph of a site upon clicking on a map feature object (be it a point, polygon, or a line). MAppFx is a product of WERI through the Guam Hydrologic Survey program (PL 24-247 and 24-161) and USGS 104-b. It is available through the Guam Hydrologic Survey website. <br><br>
+            Data for deep observation wells (DOWs) are analyzed into a historic profile of the phreatic zone, which is defined by the conductivity (salinity) of the freshwater lens, transition zone, and saltwater, reveals a dynamic phreatic zone. The graphs illustrate a historic profile of the lens, demonstrating changes in lens thickness over time. Freshwater lens dynamics observation and analysis are essential to determine the aquifer's integrity and resilience to drought over several areas in an aquifer basin. 
+            </p>
             <p class="people">
               <span>Authors</span>
               <br>
