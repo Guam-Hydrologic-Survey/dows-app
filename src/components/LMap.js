@@ -6,6 +6,7 @@ Return: none
 
 // components 
 import { BaseLayers } from "./Baselayers.js";
+import { TitleCard } from "./TitleCard.js";
 import { MarkerPopup } from "./MarkerPopup.js";
 import { completeSelection, additionalSelection, alreadySelected } from "./Toast.js";
 import { SelectionView, choices, choicesLayers, createCheckBox } from "./SelectionView.js";
@@ -83,16 +84,7 @@ export function LMap(element) {
     const layerControl = L.control.layers(baseLayers, null, { position: "bottomright" });
     layerControl.addTo(map);
 
-    // Configure map title 
-    const mapTitle = L.control({position: 'topleft'});
-
-    mapTitle.onAdd =  function(map) {
-        this._div = L.DomUtil.create('div', 'mapTitle'); 
-        this._div.innerHTML = '<img src="./src/assets/WERI_MAppFx_DOWs_Title_Card_White_Bold.png" height="120">';
-        return this._div;
-    };
-
-    mapTitle.addTo(map);
+    TitleCard(map);
 
     const zoomControl = L.control.zoom({
         // options: topleft, topright, bottomleft, bottomright
