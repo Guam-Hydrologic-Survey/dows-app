@@ -1,13 +1,13 @@
 import { convertDate } from "../utils/convertDate.js";
-import { Legend } from "./Legend.js";
-import { modalId, modalTitleHeader, plotContentId } from "./Profile.js";
+// import { Legend } from "./Legend.js";
+// import { modalId, modalTitleHeader, plotContentId } from "./Profile.js";
 
 // array to contain plot traces 
 let dataValues = [];
 
 // Initialize traces with different fill options
 let traces = {
-    GH: createTrace('GH 40:1', [], [], 'rgba(234,234,0,0.97)', 'rgba(234,234,0,0.97)', 'lines', 'none', { dash: 'longdash' }),  // No fill
+    GH: createTrace('GH 40:1', [], [], 'rgba(255,238,0,0.97)', 'rgba(234,234,0,0.97)', 'lines', 'none', { dash: 'longdash' }),  // No fill
     WL: createTrace('Freshwater [0 - 250] mg/L Cl-', [], [], 'rgb(68, 114, 196)', 'rgba(68, 114, 196, 0.2)', 'lines','tonexty'),    // Fill to next y-axis value
     BoFL: createTrace('Brackish (250 - 81,000] mg/L Cl-', [], [], 'rgb(66, 255, 66)', 'rgba(204, 255, 204, 0.6)', 'lines', 'tonexty'), // Fill to next x-axis value
     BoBL: createTrace('Saline (81,000 - 15,000] mg/L Cl-', [], [], 'rgb(0, 155, 78)', 'rgba(0, 204, 102, 0.6)', 'lines', 'tonexty'),       // No fill
@@ -47,8 +47,9 @@ let layout = {
 // General function to create trace for any data set
 function createTrace(name, xData, yData, color, fillColor, mode = 'lines+markers', fillOption = 'none', lineOptions = {}) {
     const trace = {
-        x: xData,
+        x: xData, // find the last non-null value here
         y: yData,
+        // y: checkLatestValue(),
         type: 'scatter',
         mode: mode,
         name: name,
@@ -68,21 +69,36 @@ function createTrace(name, xData, yData, color, fillColor, mode = 'lines+markers
     return trace;
 }
 
+function checkLatestValue(y_vals) {
+    let pos = 0;
+    for (let i = y_vals.length - 1; i < y_vals.length; i--) {
+        if ( y_vals[i] != null) {
+            pos = i;
+            break;
+        }
+    }
+    return pos + 1;
+}
+
 /*
 Function: setPlotData()
 Parameters: "data" - JSON data (specifically "feature.properties" from fetch method in LMap.js) containing x- and y-values for plot
 Return: none
 */
 function setPlotData(data) {
-    const xData = convertDate(data.x_vals);
+
+    let pos = checkLatestValue(data.WL_vals); // since all arrays are the same length, only one y-value array needs to be passed
+
+    // const xData = convertDate(data.x_vals);
+    const xData = convertDate(data.x_vals.slice(0, pos));
 
     // Update traces with new data
-    traces.GH.x = xData; traces.GH.y = data.GH_vals;
-    traces.WL.x = xData; traces.WL.y = data.WL_vals;
-    traces.BoFL.x = xData; traces.BoFL.y = data.BoFL_vals;
-    traces.BoBL.x = xData; traces.BoBL.y = data.BoBL_vals;
-    traces.BTZ.x = xData; traces.BTZ.y = data.BTZ_vals;
-    traces.BS.x = xData; traces.BS.y = data.BS_vals;
+    traces.GH.x = xData; traces.GH.y = data.GH_vals.slice(0, pos);
+    traces.WL.x = xData; traces.WL.y = data.WL_vals.slice(0, pos);
+    traces.BoFL.x = xData; traces.BoFL.y = data.BoFL_vals.slice(0, pos);
+    traces.BoBL.x = xData; traces.BoBL.y = data.BoBL_vals.slice(0, pos);
+    traces.BTZ.x = xData; traces.BTZ.y = data.BTZ_vals.slice(0, pos);
+    traces.BS.x = xData; traces.BS.y = data.BS_vals.slice(0, pos);
 
     // Update the dataValues array
     dataValues = [traces.BS, traces.BTZ, traces.BoBL, traces.BoFL, traces.WL, traces.GH];

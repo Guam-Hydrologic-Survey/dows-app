@@ -4,12 +4,12 @@ Description: Entry point for project. Appends all components to #app in index.ht
 */
 
 // components 
-import { About } from "./components/About.js";
+import { About } from "./components/About_v0.js";
 import { FullscreenModal } from "./components/FullscreenModal.js";
 import { NavBar } from "./components/NavBar.js";
 import { Legend } from "./components/Legend.js";
 import { LMap } from "./components/LMap.js";
-import { LargePlotModal } from "./components/Plot.js";
+import { Profile } from "./components/Profile.js";
 
 document.getElementById("app").innerHTML = /*html*/ 
 `
@@ -18,9 +18,8 @@ document.getElementById("app").innerHTML = /*html*/
     <div id="info"></div>
     <div id="notif"></div>
     <div id="multiple-plots"></div>
-    <div id="side-panel"></div>
     <div id="legend"></div>
-    <div id="large-plot"></div>
+    <div id="profile"></div>
     <div id="selection-view"></div>
 `
 
@@ -28,5 +27,5 @@ NavBar(document.getElementById("nav-bar"));
 About(document.getElementById("info"));
 FullscreenModal(document.getElementById("multiple-plots"));
 Legend(document.getElementById("legend"));
-LargePlotModal(document.getElementById("large-plot"));
+Profile(document.getElementById("profile"));
 LMap(document.getElementById("map"));

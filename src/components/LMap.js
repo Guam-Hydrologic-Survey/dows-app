@@ -6,11 +6,13 @@ Return: none
 
 // components 
 import { BaseLayers } from "./Baselayers.js";
-import { SidePanel } from "./SidePanel.js";
+import { TitleCard } from "./TitleCard.js";
 import { MarkerPopup } from "./MarkerPopup.js";
-import { MultiplePlots } from "./Plot.js";
 import { completeSelection, additionalSelection, alreadySelected } from "./Toast.js";
 import { SelectionView, choices, choicesLayers, createCheckBox } from "./SelectionView.js";
+
+import { Plot, MultiplePlots } from "./Plot_v2.js";
+import { modalId, plotContentId } from "./Profile.js";
 
 // utils 
 import { geoJsonUrl } from "../utils/dataSource.js";
@@ -66,8 +68,8 @@ const pointSelectBtn = L.easyButton({
 
 export function LMap(element) {
 
-    const center = [13.5435056,144.7478083];
-    const defaultZoom = 12;
+    const center = [13.5286582,144.8251116];
+    const defaultZoom = 13;
     const maxZoom = 19; 
 
     // creates Leaflet map 
@@ -81,6 +83,8 @@ export function LMap(element) {
 
     const layerControl = L.control.layers(baseLayers, null, { position: "bottomright" });
     layerControl.addTo(map);
+
+    TitleCard(map);
 
     const zoomControl = L.control.zoom({
         // options: topleft, topright, bottomleft, bottomright
@@ -166,42 +170,61 @@ export function LMap(element) {
     
     lassoControl.addTo(map); 
 
-    // hides tooltip based on zoom level 
-    map.on('zoomend', function(z) {
-        var zoomLevel = map.getZoom();
-        if (zoomLevel >= 15 ){
-            [].forEach.call(document.querySelectorAll('.leaflet-tooltip'), function (t) {
-                t.style.visibility = 'visible';
-            });
-        } else {
-            [].forEach.call(document.querySelectorAll('.leaflet-tooltip'), function (t) {
-                t.style.visibility = 'hidden';
+    // // hides tooltip based on zoom level 
+    // map.on('zoomend', function(z) {
+    //     var zoomLevel = map.getZoom();
+    //     if (zoomLevel >= 10 ){
+    //         [].forEach.call(document.querySelectorAll('.leaflet-tooltip'), function (t) {
+    //             t.style.visibility = 'visible';
+    //         });
+    //     } else {
+    //         [].forEach.call(document.querySelectorAll('.leaflet-tooltip'), function (t) {
+    //             t.style.visibility = 'hidden';
+    //         });
+    //     }
+    // });
+
+    fetch("./src/data/NGLABasins.json")
+    .then(response => response.json())
+    .then(json => {
+        const getPoly = (feature, layer) => {
+            layer.bindTooltip(`${feature.properties.Name} Basin`, {
+                permanent: true, direction: 'center', offset: [0, 40],
+                className: 'basin-tooltip'
             });
         }
-    });
 
-    // array holding well with status for use on point selection through click 
-    // let choices = [];
+        let basins = L.geoJSON(json, {
+            interactive: false, 
+            onEachFeature: getPoly,
+        });
+
+        basins.addTo(map);
+        layerControl.addOverlay(basins, "Basins");
+    });
     
     // get data 
     fetch(geoJsonUrl)
         .then(response => response.json())
         .then(geojson => {
-            let popup = L.popup()
+            let popup = L.popup();
             const getValues = (feature, layer) => {
-                // popup with basic well info and buttons for stats and plot
-                layer.bindPopup(MarkerPopup(feature.properties.name, feature.properties.basin, feature.properties.lat, feature.properties.lon, feature.properties.desc)); 
+                layer.bindPopup(MarkerPopup(feature.properties));
 
                 // label for well name
-                layer.bindTooltip(feature.properties.name, {permanent: true, direction: 'bottom', offset: [0,10]});
+                layer.bindTooltip(feature.properties.name, { 
+                    className: 'well-tooltip',
+                    permanent: true, 
+                    direction: 'top', 
+                    offset: [0, -10],
+                });
 
                 // check if point selection button has been triggered 
                 layer.on("click", point => { 
-                    map.closePopup(); 
+                    Plot(feature.properties, plotContentId);
                     // prevents popup from opening since side panel automatically opens 
                     if (!pointSelectBtnState) {
                         // map.closePopup(); 
-                        SidePanel(point.target.feature.properties);
                         pointSelectLayers = [];
                         // choicesLayers = [];
                         choicesLayers.length = 0;
@@ -225,8 +248,23 @@ export function LMap(element) {
                     }
                 })
             }
-            geoJsonData = L.geoJSON(geojson, { onEachFeature: (getValues) }).addTo(map);
-            layerControl.addOverlay(geoJsonData, "Layer Name");
+
+            geoJsonData = L.geoJSON(geojson, 
+                { 
+                    onEachFeature: (getValues), 
+                    pointToLayer: function(feature, latlng) {
+                        return L.circleMarker(latlng, {
+                            radius: 10,
+                            fillColor: '#023047',
+                            weight: 2,
+                            fillOpacity: 1.0,
+                            color: `#000`,
+                            opacity: 1.0
+                        });
+                    }
+                }).addTo(map);
+
+            layerControl.addOverlay(geoJsonData, "Deep Observation Wells (DOWs)");
 
             // for search control 
             let searchCoords = [];
