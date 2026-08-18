@@ -34,7 +34,7 @@ export function About(element) {
               <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" title="View associated technical reports">
                 <span class="visually-hidden">Toggle Dropdown</span>
               </button>
-              <ul class="dropdown-menu">
+              <ul class="dropdown-menu dropdown-menu-end">
                 <li class="dropdown-item">Associated Technical Reports</li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="https://guamhydrologicsurvey.uog.edu/2026/05/12/weri-technical-report-189/" target="_blank" rel="noreferrer noopener" title="Hydrologic Analysis of the Deep Observation Wells in the Northern Guam Lens Aquifer">WERI TR 189 (Snaer et al., 2026)</a></li>
