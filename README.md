@@ -12,6 +12,11 @@ Data for deep observation wells (DOWs) is analyzed into a historic profile of th
 
 The technical report for this project is in progress and will soon be available through the WERI website's _Reports and Publications_ section [here](https://weri.uog.edu/reports-and-publications/). It will also be available through the Guam Hydrologic Survey website, [here](https://guamhydrologicsurvey.uog.edu/index.php/library/sort-and-search-library/).
 
+_Related Reports_
+
+- [WERI TR No. 189: Hydrologic Analysis of the Deep Observation Wells in the Northern Guam Lens Aquifer (Snaer et al., 2026)](https://guamhydrologicsurvey.uog.edu/2026/05/12/weri-technical-report-189/)
+- [WERI TR No. 168: Dynamic Response of the Freshwater Lens to Natural Variations in Recharge Northern Guam Lens Aquifer, Yigo-Tumon Basin, Guam (Dougher et al., 2026)](https://guamhydrologicsurvey.uog.edu/2025/07/28/lens-dynamics/)
+
 ## Authors 
 
 MW Zapata, DK Valerio, MC Snaer & NC Habana 
