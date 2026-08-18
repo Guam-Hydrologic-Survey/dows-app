@@ -27,7 +27,21 @@ export function About(element) {
             </p>
           </div>
           <div class="modal-footer about-btns">
-            <a class="btn btn-primary" title="Coming soon!" href="https://guamhydrologicsurvey.uog.edu/2025/11/07/mappfx-deep-observation-wells-dows/" target="_blank" rel="noreferrer noopener" role="button">WERI Technical Report</a>
+            <!--<a class="btn btn-primary" title="Coming soon!" href="https://guamhydrologicsurvey.uog.edu/2025/11/07/mappfx-deep-observation-wells-dows/" target="_blank" rel="noreferrer noopener" role="button">WERI Technical Report</a>-->
+            <!-- Dropdown for links to associated TRs -->
+            <div class="btn-group">
+              <a class="btn btn-primary" title="Coming soon!" href="#" target="_blank" rel="noreferrer noopener" role="button">WERI Technical Report</a>
+              <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" title="View associated technical reports">
+                <span class="visually-hidden">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu">
+                <li class="dropdown-item">Associated Technical Reports</li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="https://guamhydrologicsurvey.uog.edu/2026/05/12/weri-technical-report-189/" target="_blank" rel="noreferrer noopener" title="Hydrologic Analysis of the Deep Observation Wells in the Northern Guam Lens Aquifer">WERI TR 189 (Snaer et al., 2026)</a></li>
+                <li><a class="dropdown-item" href="https://guamhydrologicsurvey.uog.edu/2025/07/28/lens-dynamics/" target="_blank" rel="noreferrer noopener" title="Dynamic Response of the Freswater Lens to Natural Variations in Recharge Northern Guam Lens Aquifer, Yigo-Tumon Basin, Guam">WERI TR 168 (Dougher et al., 2019)</a></li>
+              </ul>
+            </div>
+
             <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   WERI Map Series
