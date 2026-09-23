@@ -92,7 +92,7 @@ export function LMap(element) {
     });
     zoomControl.addTo(map);
 
-    const resetZoomBtn = L.easyButton('<img src="./src/assets/geo-fill.svg">', function() {
+    const resetZoomBtn = L.easyButton('<img src="./src/assets/arrow-clockwise.svg">', function() {
         map.setView(center, defaultZoom);
     }, "Reset map view");
 
