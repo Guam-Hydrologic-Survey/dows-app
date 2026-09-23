@@ -24,48 +24,6 @@ let selectionMode = "";
 
 const lassoControl = L.control.lasso({ position: "bottomright" });
 
-let pointSelectBtnState = false;
-let pointSelectLayers = [];
-
-// const pointSelectBtn = L.easyButton({
-//     states: [
-//         {
-//             stateName: 'detrigger-pointSelectBtn',
-//             icon: '<img src="./src/assets/hand-index-thumb.svg">',
-//             title: 'Select points to plot on click',
-//             onClick: function(btn, map) {
-//                 console.log("Turned on point selection through click");
-//                 btn.state('trigger-pointSelectBtn');
-//                 pointSelectBtnState = true;
-//                 console.log(pointSelectBtnState);
-//                 map.on("click", function(point) {
-//                     console.log(point.latlng);
-//                     // console.log(point.target.feature.properties.name);
-//                     console.log("Selected a point.")
-//                 });
-//                 selectionMode = "click";
-//                 // additionalSelection(document.getElementById("notif"));
-//                 SelectionView();
-//             }
-//         },
-//         {
-//             stateName: 'trigger-pointSelectBtn',
-//             icon: '<img src="./src/assets/hand-index-thumb-fill.svg">',
-//             title: "Turn off click-on-point selection",
-//             onClick: function(btn) {
-//                 console.log("Turned off point selection through click");
-//                 btn.state('detrigger-pointSelectBtn');
-//                 pointSelectBtnState = false;
-//                 pointSelectLayers = [];
-//                 // choicesLayers = [];
-//                 const selectionView = document.getElementById("selection-view-offcanvas");
-//                 const selectionViewOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(selectionView);
-//                 selectionViewOffcanvas.hide();
-//             }
-//         }
-//     ]
-// });
-
 export function LMap(element) {
 
     const center = [13.5286582,144.8251116];
@@ -336,18 +294,3 @@ export function LMap(element) {
 // TODO - include point selection control as an export along with lassoControl to be triggered back on/off upon clicking "Select more points to plot" button in FullscreenModal.js 
 // export { selectionMode, lassoControl, pointSelectBtn };
 export { lassoControl };
-
-// let selectionState;
-
-// export function updateSelectionStates() {
-//     selectionState = {
-//         method: "",
-//         state: false,
-//     }
-
-//     for (let input of document.querySelectorAll('input')) {
-//         if (input.checked) {
-//             switch (input.className) { }
-//         }
-//     }
-// }
